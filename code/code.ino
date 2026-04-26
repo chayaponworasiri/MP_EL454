@@ -36,19 +36,26 @@ void clapDetectionTask(void *pvParameters) {
 
 void sensorUpdateTask(void *pvParameters) {
     while (true) {
+        myMMWave.update(); 
+
         sensors_event_t a, g, temp;
         myMPU.getReading(a, g, temp);
         int gasPPM = myGas.readRaw();
         bool irState = myIR.isTriggered();
+        
         bool moveState = myMMWave.isTargetDetected();
 
-        myDisplay.updateDashboard(temp.temperature, gasPPM, irState, moveState, (millis() - lastClapTime < 500));
-
+        myDisplay.updateDashboard(
+            temp.temperature, 
+            gasPPM, 
+            irState, 
+            moveState, 
+            (millis() - lastClapTime < 500)
+        );
 
         vTaskDelay(pdMS_TO_TICKS(200));
     }
 }
-
 void setup() {
     Serial.begin(115200);
 

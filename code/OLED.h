@@ -5,7 +5,6 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-// ตั้งค่าขนาดหน้าจอ
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 #define OLED_RESET    -1
@@ -35,11 +34,14 @@ public:
         display.setTextSize(1);
         display.setCursor(0,0);
         
-        display.printf("Temp: %.1f C\n", temp);
-        display.printf("Gas : %d PPM\n", gas);
-        display.printf("IR  : %s\n", ir ? "DETECT" : "CLEAR");
-        display.printf("Move: %s\n", mmwave ? "YES" : "NO");
-        display.printf("Clap: %s\n", clap ? "DETECTED" : "-");
+        display.printf("TEMP: %.1f C\n", temp);
+        display.printf("GAS : %d PPM\n", gas);
+        display.printf("IR  : %s\n", ir ? "DETECTED" : "-");
+        
+        // ส่วนที่เน้น: แสดงสถานะการเจอคนจาก mmWave
+        display.printf("MOVE: %s\n", mmwave ? "FOUND PERSON" : "NO ONE"); 
+        
+        display.printf("CLAP: %s\n", clap ? "YES!" : "-");
         
         display.display();
     }
